@@ -4,6 +4,31 @@
 
     require_once __DIR__.'/Connection.php';
 
+    $error=''; // Variable To Store Error Message
+    if (isset($_POST['register'])) {
+         // set parameters and execute
+         $name = $_POST["name"];
+         $email = $_POST["email"];
+         $password = $_POST["pass"];
+         $passwordConfirm = $_POST["passconfirm"];
+
+        if(isset($name) == TRUE && isset($email) == TRUE && isset($password) == TRUE && isset($passwordConfirm) == TRUE){
+            if(strcmp($password,$passwordConfirm)==0){
+                register($name, $email, $password);
+            }
+            else{
+             $error = "Confirm password again!";
+             echo $error;
+            }
+            
+         }
+        else{
+             $error = "ALL fields required!";
+             echo $error;
+        }
+         
+    }
+
     function register($name, $email, $password){
 
         /*get connection from database*/
@@ -18,12 +43,12 @@
 
          if($stmt->execute() == TRUE) {
 
-            $uID = $connect->insert_id;
+            $userID = $connect->insert_id;
 
-         //echo "New user added successfully";
+            //echo "New user added successfully";
             /*return userID*/
-            $arr = array('userID' => $uID);
-            echo json_encode($arr);
+            $_SESSION['iduser']=$userID; // Initializing Session
+            header("location: task.php"); // Redirecting To Other Page
         } else {
             echo $connect->error;
         }
@@ -32,13 +57,5 @@
         $connect->close();
 
     }
-        // set parameters and execute
-         $name = $_POST["name"];
-         $email = $_POST["email"];
-         $password = $_POST["pass"];
-         //$pictureFile = "uploads/profPic".$idUser; 
-
-         if(isset($name) == TRUE && isset($email) == TRUE && isset($password) == TRUE){
-            register($name, $email, $password);
-         }
+       
 ?>

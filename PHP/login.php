@@ -4,7 +4,7 @@
 
     session_start(); // Starting Session
     $error=''; // Variable To Store Error Message
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['login'])) {
 
         $email = $_POST["email"];
         $password = $_POST["password"];
