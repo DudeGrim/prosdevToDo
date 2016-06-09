@@ -9,8 +9,7 @@
 <html>
     <head>
         <title> Log in </title>
-        <link rel="stylesheet" type="text/css"
-            href="style.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/style.css">
         <body>
             <div class="container">
                 <div class="wrap">

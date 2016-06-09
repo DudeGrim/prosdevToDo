@@ -1,12 +1,12 @@
 <?php
-	/*client calls this*/
-	/*new user's are inserted here*/
+    /*client calls this*/
+    /*new user's are inserted here*/
 
-	require_once __DIR__.'/Connection.php';
+    require_once __DIR__.'/Connection.php';
 
     function register($name, $email, $password){
 
-    	/*get connection from database*/
+        /*get connection from database*/
         $connect = new DBConnection();
         $connect = $connect->getInstance();
 
@@ -18,15 +18,15 @@
 
          if($stmt->execute() == TRUE) {
 
-        	$uID = $connect->insert_id;
+            $uID = $connect->insert_id;
 
          //echo "New user added successfully";
-         	/*return userID*/
-         	$arr = array('userID' => $uID);
-         	echo json_encode($arr);
-    	} else {
-    		echo $connect->error;
-    	}
+            /*return userID*/
+            $arr = array('userID' => $uID);
+            echo json_encode($arr);
+        } else {
+            echo $connect->error;
+        }
 
         $stmt->close();
         $connect->close();

@@ -1,10 +1,10 @@
 <?PHP
 
-	/*Insert New task*/
+  /*Insert New task*/
 
-	require_once __DIR__.'/Connection.php';
+  require_once __DIR__.'/Connection.php';
 
-	/*Input all data*/
+  /*Input all data*/
      
      function newTask($idUser, $task, $description, $deadline, $tags){
 
@@ -44,11 +44,11 @@
 
 
          if($stmt->execute() == TRUE) {
-        	$taskID = $connect->insert_id;
-         	echo $taskID;
-    	} else {
-    		echo $connect->error;
-    	}
+          $taskID = $connect->insert_id;
+          echo $taskID;
+      } else {
+        echo $connect->error;
+      }
 
         $stmt->close();
         $connect->close();  

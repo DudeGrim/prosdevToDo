@@ -1,6 +1,6 @@
 <?php
-	
-	require_once __DIR__.'/Connection.php';
+    
+    require_once __DIR__.'/Connection.php';
 
     session_start(); // Starting Session
     $error=''; // Variable To Store Error Message
