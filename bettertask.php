@@ -1,6 +1,3 @@
-<?php
-    include('../PHP/newTask.php'); // Includes Add new task Script
-?>
     <link href="task_stylesheet.css" rel="stylesheet" media="screen">
     <div class="cont_principal">
         <div class="cont_centrar">
@@ -15,7 +12,7 @@
                 <!--   End cont_todo_list_top  -->
             </div>
             <div class="cont_crear_new">
-                <form action="" method="post">
+                <!--<form action="" method="post">-->
                     <table class="table">
                         <tr>
                             <th>Action</th>
@@ -55,11 +52,11 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <button name="add_new_task" class="btn_add_fin" onclick="add_to_list()">ADD</button>
+                                <button name="add_new_task" class="btn_add_fin" onclick="callAdd()">ADD</button>
                             </td>
                         </tr>
                     </table>
-                </form>
+                <!--</form>-->
                 <!--   End cont_crear_new  -->
             </div>
 
@@ -96,4 +93,26 @@
             <!--   End cont_central  -->
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
+    <script >
+        function callAdd(){
+            add_to_list();
+
+            console.log("hai");
+            var category = document.querySelector('#action_select').value
+            , description = document.querySelector('.input_description').value
+            , title = document.querySelector('.input_title_desc').value
+            , date = document.getElementById('date_select').value;
+
+            jQuery.ajax({
+                type: "POST",
+                url: '../PHP/newTask.php',
+                data: {functionname: 'add_new_task', arguments: [category, description, title, date]}, 
+                 success:function(data) {
+                    alert(data); 
+                 }
+            });
+
+        }
+    </script>
     <script src="task-script.js"></script>

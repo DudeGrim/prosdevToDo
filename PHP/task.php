@@ -1,6 +1,5 @@
 <?php
     include('../PHP/newTask.php'); // Includes Add new task Script
-include('readAllUserTask.php');
 	$iduser=$_SESSION['iduser'];
 ?>
     <html>
@@ -8,8 +7,81 @@ include('readAllUserTask.php');
     <head>
         <title>Ready to add task?</title>
         <link href="../CSS/task_stylesheet.css" rel="stylesheet" media="screen">
+    
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
+        <script >   
+        function callAdd(){
+            
+            var category = document.querySelector('#action_select').value
+            , description = document.querySelector('.input_description').value
+            , title = document.querySelector('.input_title_desc').value
+            , date = document.getElementById('date_select').value;
 
+            jQuery.ajax({
+                type: "POST",
+                url: '../PHP/newTask.php',
+                data: {functionname: 'add_new_task', arguments: [category, description, title, date]}, 
+                 success:function(data) {
+                    console.log("new task added"); 
+                    console.log("task id" + data);
+                    add_to_list(data);
+                 }
+            });
 
+        }
+    </script>
+    <script src="../JS/task-script.js"></script>
+        <script>
+         $( window ).load(function() {
+            jQuery.ajax({
+                type: "POST",
+                url: '../PHP/readAllUserTask.php',
+                data: {functionname: 'loadTasks'}, 
+                 success:function(data) {
+                    console.log(data); 
+
+                    try {
+                        var arr = jQuery.parseJSON( data );
+
+                         for(var i in arr)
+                         {
+                             var idtask = arr[i].idTask;
+                             var task = arr[i].task;
+                             var description = arr[i].description;
+                             var deadline = arr[i].deadline;
+                             var worktag = arr[i].worktag;
+                             var schooltag = arr[i].schooltag;
+                             var personaltag = arr[i].personaltag;
+                             var familytag = arr[i].familytag;
+                             var notag = arr[i].notag;
+                             var usertag = arr[i].usertag;
+
+                             console.log(idtask  + task + description + deadline + worktag+ schooltag+personaltag+familytag+notag+usertag);
+
+                             if(notag == 1){
+                                loadList(idtask, task, description, deadline, "DEFAULT");
+                             }
+                             else if(worktag == 1){
+                                loadList(idtask, task, description, deadline, "WORK");
+                             }
+                             else if(schooltag == 1){
+                                loadList(idtask, task, description, deadline, "SCHOOL");
+                             }
+                             else if(personaltag == 1){
+                                loadList(idtask, task, description, deadline, "PERSONAL");
+                             }
+                             else if(familytag == 1){
+                                loadList(idtask, task, description, deadline, "FAMILY");
+                             }
+                        }
+                    } catch (e) {
+                        console.log("add new tasks");
+                    }
+                   
+                }
+            });
+        });
+        </script>
     </head>
 
     <body>
@@ -29,7 +101,7 @@ include('readAllUserTask.php');
                     <!--   End cont_todo_list_top  -->
                 </div>
                 <div class="cont_crear_new">
-                    <form action="" method="post">
+                    <!--<form action="" method="post">-->
                         <table class="table">
                             <tr>
                                 <th>Action</th>
@@ -69,40 +141,18 @@ include('readAllUserTask.php');
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <button name="add_new_task" class="btn_add_fin" onclick="add_to_list()">ADD</button>
+                                    <button name="add_new_task" class="btn_add_fin" onclick="callAdd()">ADD</button>
                                 </td>
                             </tr>
                         </table>
-                    </form>
+                    <!--</form>-->
                     <!--   End cont_crear_new  -->
                 </div>
 
 
                 <div class="cont_princ_lists">
-
                     <ul>
-                        <li class="list_shopping li_num_0_1">
-                            <div class="col_md_1_list">
-                                <p>SHOPPIGN</p>
-                            </div>
-                            <div class="col_md_2_list">
-                                <h4>BUY COFFEE BEANS</h4>
-                                <p>DODIDONE COFFEE STORE</p>
-                            </div>
-                            <div class="col_md_3_list">
-                                <div class="cont_text_date">
-                                    <p>TODAY</p>
-                                </div>
-                                <div class="cont_btns_options">
-                                    <ul>
-                                        <li><a href="#" onclick="finish_action('0','0_1');"><i class="material-icons">&#xE5CA;</i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
-
-
                     <!--   End cont_todo_list_top  -->
                 </div>
 
@@ -111,7 +161,7 @@ include('readAllUserTask.php');
             </div>
         </div>
         <?php getTasks($iduser)?>
-            <script src="../JS/task-script.js"></script>
-    </body>
+           
 
+    </body>
     </html>

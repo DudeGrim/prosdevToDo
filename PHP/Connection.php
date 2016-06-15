@@ -11,7 +11,7 @@ class DBConnection
 	{
 			$this->servername = "localhost";
 			$this->dbuser = "root";
-			$this->password = "";
+			$this->password = "soawesome";
 			$this->dbName = "prosdevtodo";
 			$this->conn = new mysqli($this->servername, $this->dbuser, $this->password, $this->dbName);
 	}

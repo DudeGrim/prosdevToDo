@@ -48,6 +48,7 @@
             //echo "New user added successfully";
             /*return userID*/
             $_SESSION['iduser']=$userID; // Initializing Session
+
             header("location: task.php"); // Redirecting To Other Page
         } else {
             echo $connect->error;

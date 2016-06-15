@@ -3,13 +3,23 @@
 	/*get all posts of a user*/
 	require_once __DIR__.'/Connection.php';
 
+
+    session_start(); // Starting Session
+    $error=''; // Variable To Store Error Message
+    if (isset($_SESSION["iduser"])) {
+
+         // set parameters and execute
+        $idUser = $_SESSION["iduser"];
+        getTasks($idUser);
+    }
+
     function getTasks($id){
 	/*get connection from database*/
     $connect = new DBConnection();
     $connect = $connect->getInstance();
 
 	// sql to delete a record
-	$sql = "SELECT * FROM `task` WHERE `iduser` = '$id'";
+	$sql = "SELECT * FROM `task` WHERE `iduser` = '$id' and `active` = 1";
 
     $result = $connect->query($sql);
 

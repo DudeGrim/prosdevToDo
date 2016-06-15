@@ -6,18 +6,17 @@
 
     session_start(); // Starting Session
     $error=''; // Variable To Store Error Message
-echo "im a little bitch!";
-    if (isset($_POST['add_new_task'])) {
+    if (isset($_POST['functionname'])) {
 
          // set parameters and execute
         $idUser = $_SESSION["iduser"];
-        $task = $_POST["task"];
-        $description = $_POST["description"];
-        $date = $_POST["date"];
-        $categories = $_POST["categories"];
+        $task = $_POST['arguments'][2];
+        $description = $_POST['arguments'][1];
+        $date = $_POST['arguments'][3];
+        $category = $_POST['arguments'][0];
 
-        if(isset($task) == TRUE && isset($description) == TRUE && isset($date) == TRUE && isset($categories) == TRUE){
-            newTask($idUser, $task, $description, $date, $categories);
+        if(isset($task) == TRUE && isset($description) == TRUE && isset($date) == TRUE && isset($category) == TRUE){
+            newTask($idUser, $task, $description, $date, $category);
         }
         else{
              $error = "All fields are required!";
@@ -25,35 +24,43 @@ echo "im a little bitch!";
     }
   /*Input all data*/
      
-     function newTask($idUser, $task, $description, $deadline, $tags){
+     function newTask($idUser, $task, $description, $deadline, $category){
 
         $worktag = 0;
         $schooltag = 0;
         $familytag = 0;
         $personaltag = 0;
-        $usertag = "usertag";
+        $usertag = "";
         $notag = 0;
          
-         /*
-            // tags
-            list($worktag, $schooltag, $familytag, $personaltag, $usertag) = explode(":", $tags);
-        */
-        echo $worktag;
-        echo $schooltag;
-        echo "family".$familytag;
-        echo $personaltag;
-        echo $usertag;
-
-
+     
+        switch ($category) {
+          case 'DEFAULT':
+            $notag = 1;
+            break;
+          case 'WORK':
+            $worktag = 1;
+            break;
+          case 'FAMILY':
+            $familytag = 1;
+            break;
+          case 'SCHOOL':
+            $schooltag = 1;
+            break;
+          case 'PERSONAL':
+            $personaltag = 1;
+            break;
+          default:
+            # code...
+            break;
+        }
         /*get connection from database*/
         $connect = new DBConnection();
         $connect = $connect->getInstance();
 
-        if(empty($worktag) == true || empty($schooltag) == true || empty($familytag) == true || empty($personaltag) == true || empty($usertag) == true){
-            $notag = 0;
-
-              /*prepared statement*/
-            $stmt = $connect->prepare(" INSERT INTO `task`(`isUser`, `task`, `description`, `deadline`, `worktag`, `schooltag`, `familytag`, `personaltag`, `notag`, `usertag` ) VALUES (?,?,?,?, ?, ?, ?, ?, ?,?)");
+        if($notag == 0){
+            /*prepared statement*/
+            $stmt = $connect->prepare(" INSERT INTO `task`(`iduser`, `task`, `description`, `deadline`, `worktag`, `schooltag`, `familytag`, `personaltag`, `notag`, `usertag` ) VALUES (?,?,?,?, ?, ?, ?, ?, ?,?)");
             $stmt->bind_param("isssiiiiis", 
                               $idUser, 
                               $task, 
@@ -68,8 +75,8 @@ echo "im a little bitch!";
           }
         else{
               /*prepared statement*/
-            $stmt = $connect->prepare(" INSERT INTO `task`(`isUser`, `task`, `description`, `deadline`) VALUES (?,?,?,?)");
-            $stmt->bind_param("isss", $idUser, $task, $description, $deadline);
+            $stmt = $connect->prepare(" INSERT INTO `task`(`iduser`, `task`, `description`, `deadline`, `usertag` ) VALUES (?,?,?,?,?)");
+            $stmt->bind_param("issss", $idUser, $task, $description, $deadline, $usertag);
         }
       
          if($stmt->execute() == TRUE) {
