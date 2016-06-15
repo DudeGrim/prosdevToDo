@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <h1 class="text-center">Tasks</h1>
+
+        <link href="bootstrap.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <div class="input-group">
+           <input type="text" id="addForm" class="form-control" placeholder="Add task here">
+           <span class="input-group-btn">
+             <button class="btn btn-default" type="button" onclick="addTask()">+</button>
+           </span>
+        </div>
+        <hr>
+        <ul id="taskList">
+            
+        </ul>
+        
+    
+    <script>
+        var list = document.getElementById('taskList');
+        function addTask(){
+            //initialize components to add
+            var taskListElement = document.createElement('li'); //holds the div for all the components
+            var taskDiv = document.createElement('div');//the div that holds the components for each task
+            taskDiv.style = "width:100%"
+            var checkbox = document.createElement('input');// the checkbox per task
+            checkbox.type =  'checkbox';
+            checkbox.style = "float:left;width:5%";
+            var task = document.getElementById('addForm').value;// the string that holds the task description
+            var categoryDiv = document.createElement("div");
+            categoryDiv.style = "float:left; width:20%;";
+            categoryDiv.class = "dropdown";
+            categoryDiv.innerHTML = "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Categories<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='#'>HTML</a></li><li><a href='#'>CSS</a></li><li><a href='#'>JavaScript</a></li></ul>";
+            var taskHeader = document.createElement("h4");
+            taskHeader.style = "float:left;width:70%";
+            taskHeader.appendChild(document.createTextNode(task));
+
+
+            
+            //add to parent elements
+            taskDiv.appendChild(checkbox);
+            taskDiv.appendChild(taskHeader);
+            taskDiv.appendChild(categoryDiv);
+            taskListElement.appendChild(taskDiv);
+            
+            //finally add 'listed' div for all components with the border
+            list.appendChild(taskListElement); 
+            list.appendChild(document.createElement('hr'));
+        }
+        
+        
+    </script>
+</html>
