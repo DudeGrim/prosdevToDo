@@ -12,10 +12,13 @@
         <script >   
         function callAdd(){
             
-            var category = document.querySelector('#action_select').value
-            , description = document.querySelector('.input_description').value
+            var description = document.querySelector('.input_description').value
             , title = document.querySelector('.input_title_desc').value
             , date = document.getElementById('date_select').value;
+
+
+            var sel = document.getElementById("action_select");
+            var category= sel.options[sel.selectedIndex].text;
 
             jQuery.ajax({
                 type: "POST",
@@ -24,14 +27,14 @@
                  success:function(data) {
                     console.log("new task added"); 
                     console.log("task id" + data);
-                    add_to_list(data);
+                    add_to_list(data, category, description, title, date);
                  }
             });
 
         }
     </script>
     <script src="../JS/task-script.js"></script>
-        <script>
+    <script>
          $( window ).load(function() {
             jQuery.ajax({
                 type: "POST",
@@ -73,6 +76,9 @@
                              else if(familytag == 1){
                                 loadList(idtask, task, description, deadline, "FAMILY");
                              }
+                             else{
+                                loadList(idtask, task, description, deadline, usertag);
+                             }
                         }
                     } catch (e) {
                         console.log("add new tasks");
@@ -81,6 +87,18 @@
                 }
             });
         });
+        </script>
+        <script>
+            function askUser(selected) {
+                if(selected == "USER"){
+                    var category = prompt("Enter category", "User Defined");
+                    if (category != null) {
+                        document.getElementById("USER_DEFINED").text = category.toUpperCase();
+                        document.getElementById("USER_DEFINED").value = category.toUpperCase();
+                    }  
+                }
+                               
+            }
         </script>
     </head>
 
@@ -110,12 +128,13 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select name="categories" id="action_select">
+                                    <select name="categories" id="action_select" onclick="askUser(this[selectedIndex].text)">
                                         <option value="DEFAULT">DEFAULT</option>
                                         <option value="WORK">WORK</option>
                                         <option value="FAMILY">FAMILY</option>
                                         <option value="SCHOOL">SCHOOL</option>
                                         <option value="PERSONAL">PERSONAL</option>
+                                        <option id="USER_DEFINED" value="BITCH">USER</option>
                                     </select>
                                     <!-- End td 1 -->
                                 </td>
@@ -161,7 +180,5 @@
             </div>
         </div>
         <?php getTasks($iduser)?>
-           
-
     </body>
     </html>

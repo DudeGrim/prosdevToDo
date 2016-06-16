@@ -333,6 +333,10 @@ body {
     color: #EF8A18;
 }
 
+.list_user > .col_md_1_list {
+    border-left: 4px solid #9575B4;
+    color: #9575B4;
+}
 .list_finish_state {
     opacity: 0.3;
     margin: 15px 0px;

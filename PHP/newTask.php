@@ -51,7 +51,7 @@
             $personaltag = 1;
             break;
           default:
-            # code...
+            $usertag = $category;
             break;
         }
         /*get connection from database*/

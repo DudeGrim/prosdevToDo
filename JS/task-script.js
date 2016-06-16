@@ -4,24 +4,21 @@ var contador = 0
 function loadList(task_id, title, description, date, action){
     contador = task_id;
     
-    switch (action) {
-    case "DEFAULT":
+    if(action == "DEFAULT"){
         select_opt = 0;
-        break;
-    case "WORK":
+    }else if(action == "WORK"){
         select_opt = 1;
-        break;
-    case "FAMILY":
+    }else if(action == "FAMILY"){
         select_opt = 2;
-        break;
-    case "SCHOOL":
+    }else if(action == "SCHOOL"){
         select_opt = 3;
-        break;
-    case "PERSONAL":
-        select_opt = 3;
-        break;
+    }else if(action == "PERSONAL"){
+        select_opt = 4;
+    }else{
+        select_opt = 5;
     }
-    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none'];
+
+    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none', 'list_user list_dsp_none'];
 
     var cont = '<div class="col_md_1_list">    <p>' + action 
                 + '</p>    </div> <div class="col_md_2_list"> <h4>' 
@@ -46,33 +43,26 @@ function loadList(task_id, title, description, date, action){
         contador++;
     }, 200);
 }
-function add_to_list(task_id) {
-    var action = document.querySelector('#action_select').value
-        , description = document.querySelector('.input_description').value
-        , title = document.querySelector('.input_title_desc').value
-        , date = document.getElementById('date_select').value;
+function add_to_list(task_id, action, description, title, date) {
 
-        contador = task_id;
+  contador = task_id;
 
-    switch (action) {
-    case "DEFAULT":
+    if(action == "DEFAULT"){
         select_opt = 0;
-        break;
-    case "WORK":
+    }else if(action == "WORK"){
         select_opt = 1;
-        break;
-    case "FAMILY":
+    }else if(action == "FAMILY"){
         select_opt = 2;
-        break;
-    case "SCHOOL":
+    }else if(action == "SCHOOL"){
         select_opt = 3;
-        break;
-    case "PERSONAL":
-        select_opt = 3;
-        break;
+    }else if(action == "PERSONAL"){
+        select_opt = 4;
+    }else{
+        select_opt = 5;
     }
 
-    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none'];
+
+    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none', 'list_user list_dsp_none'];
 
     var cont = '<div class="col_md_1_list">    <p>' + action 
                 + '</p>    </div> <div class="col_md_2_list"> <h4>' 
@@ -110,7 +100,7 @@ function finish_action(num, num2) {
             console.log("task id" + num2);
          }
     });
-    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none'];
+    var class_li = ['list_default list_dsp_none', 'list_work list_dsp_none', 'list_family list_dsp_none', 'list_school list_dsp_none', 'list_personal list_dsp_none', 'list_user list_dsp_none'];
     console.log('.li_num_' + num2);
     document.querySelector('.li_num_' + num2).className = class_li[num] + " list_finish_state";
     setTimeout(function () {
