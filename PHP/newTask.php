@@ -6,7 +6,7 @@
 
     session_start(); // Starting Session
     $error=''; // Variable To Store Error Message
-echo "im a little bitch!";
+
     if (isset($_POST['add_new_task'])) {
 
          // set parameters and execute
@@ -54,7 +54,7 @@ echo "im a little bitch!";
 
               /*prepared statement*/
             $stmt = $connect->prepare(" INSERT INTO `task`(`isUser`, `task`, `description`, `deadline`, `worktag`, `schooltag`, `familytag`, `personaltag`, `notag`, `usertag` ) VALUES (?,?,?,?, ?, ?, ?, ?, ?,?)");
-            $stmt->bind_param("isssiiiiis", 
+            $stmt->bind_param("isssbbbbbs", 
                               $idUser, 
                               $task, 
                               $description, 

@@ -18,7 +18,7 @@
                 <form action="" method="post">
                     <table class="table">
                         <tr>
-                            <th>Action</th>
+                            <th>Categories</th>
                             <th>Title</th>
                             <th>Date</th>
                         </tr>
@@ -26,7 +26,7 @@
                             <td>
                                 <select name="categories" id="action_select">
                                     <option value="DEFAULT">DEFAULT</option>
-                                    <option value="WORK">WORK</option>
+                                    <option value="WORK">POOPOO</option>
                                     <option value="FAMILY">FAMILY</option>
                                     <option value="SCHOOL">SCHOOL</option>
                                     <option value="PERSONAL">PERSONAL</option>

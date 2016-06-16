@@ -32,7 +32,7 @@ include('readAllUserTask.php');
                     <form action="" method="post">
                         <table class="table">
                             <tr>
-                                <th>Action</th>
+                                <th>Task Category</th>
                                 <th>Title</th>
                                 <th>Date</th>
                             </tr>
@@ -83,7 +83,7 @@ include('readAllUserTask.php');
                     <ul>
                         <li class="list_shopping li_num_0_1">
                             <div class="col_md_1_list">
-                                <p>SHOPPIGN</p>
+                                <p>SHOPPING</p>
                             </div>
                             <div class="col_md_2_list">
                                 <h4>BUY COFFEE BEANS</h4>
